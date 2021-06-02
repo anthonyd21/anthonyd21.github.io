@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.urls import reverse
@@ -11,12 +11,14 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.template.loader import render_to_string
+from django.core import serializers
 
 from user.forms import SignUpForm
 from user.tokens import account_activation_token
 from .models import *
 
 import datetime
+import time
 
 class NewTaskForm(forms.Form):
     task = forms.CharField(label="New Task")
@@ -26,15 +28,10 @@ def index(request):
         is_guest = 0
     else:
         is_guest = 1
-    now = datetime.datetime.now()
-    months = ["January", "February", "March", "April",
-              "May", "June", "July", "August", "September",
-              "October", "November", "December"]
+    
     return render(request,"user/index.html",{
-        "now": now,
-        "month": months[now.month-1],
         "users": Profile.objects.all(),
-        "posts": Post.objects.all(),
+        "posts": Post.objects.all().order_by('-date'),
         "is_guest": is_guest
     })
 
@@ -72,11 +69,15 @@ def userpage(request, name):
     else:
         return returnuserpage(request,name,None)
 
-def login_view(request):
+def login_view(request,liking=0):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
         user = authenticate(request, username=username, password=password)
+        if liking == 1:
+            return render(request, "user/login.html", {
+                "message": "Log in to like a post."
+            })
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("user:index"))

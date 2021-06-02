@@ -13,5 +13,5 @@ urlpatterns = [
     path('sent/', views.account_activation_sent, name='account_activation_sent'),
     path('activate/<uidb64>/<token>/',views.activate, name='activate'),
     path('newpost/', views.newpost, name='newpost'),
-    path('media/<str:name>/',views.userpage,name='userpage')
+    path('<str:name>/',views.userpage,name='userpage')
 ]

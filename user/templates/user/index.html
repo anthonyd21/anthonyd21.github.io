@@ -17,17 +17,19 @@
 {% endblock %}
 
 {% block body %}
-        <div>Posts</div>
         {% for post in posts %}
-        <div id=postdesc>{{ post.owner.user.first_name }} is in {{ post.location }}:</div>
-        <div><img src="{{ post.image.url }}" alt="image"></div>
-        <div>{{ post.text }}</div>
-        <div>Liked by:
-        <ul>
-            {% for like in likes %}
-            {{ like.user.username }}
-            {% endfor %}
-        </ul>
+        <div class="postwrapper">
+            <div id="postdesc"><img id="avatarpost" src="{{ post.owner.avatar.url }}" alt="avatar">
+        {{ post.owner.user.username }} 
+        {% if post.location != None %}
+            is in {{ post.location }} at {{ post.date }}:
+        {% else %}
+            posted at {{ post.date }}:
+        {% endif %}
+                </div>
+            <div id="pimwrap"><img id="postimage" src="{{ post.image.url }}" alt="image"></div>
+            <div id="posttext">{{ post.text }}</div>
         </div>
         {% endfor %}
+        
 {% endblock %}

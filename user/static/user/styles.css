@@ -1,7 +1,3 @@
-div {
-    color:white
-}
-
 .boy {
     text-align: right;
     color: white;
@@ -33,4 +29,45 @@ body {
 .topnav a:hover {
     background-color: #ddd;
     color: black;
+}
+
+.postwrapper {
+    float: left;
+    margin: 40px;
+    padding: 10px;
+    display: block;
+    width: 600px;
+    background-color: #222;
+    color: white;
+    border-radius: 1%;
+
+}
+
+
+#pimwrap {
+    text-align: center;
+}
+
+#postimage {
+    width: 595px;
+}
+
+#postdesc {
+    background-color: #333;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+#posttext {
+    background-color: #333;
+    padding: 10px;
+}
+
+#avatarpost {
+    width: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
