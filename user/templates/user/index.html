@@ -1,0 +1,33 @@
+{% extends "user/layout.html" %}
+{% load static %}
+{% block head %}
+    <title>Homepage</title>
+{% endblock %}
+
+{% block topnav %}
+<a href="{% url 'user:index' %}">Network</a>
+            {% if is_guest == 0 %}
+                <a id="topright" href="{% url 'user:login' %}">Login</a>
+                <a id="topright" href="{% url 'user:signup' %}">Sign Up</a>
+            {% else %}
+                <a id="topright" href="{% url 'user:logout' %}">Log Out</a>
+                <a id="topright" href="{% url 'user:userpage' request.user.username %}">Your Page</a>
+                <a id="topright" href="{% url 'user:newpost' %}">New Post</a>
+            {% endif %}
+{% endblock %}
+
+{% block body %}
+        <div>Posts</div>
+        {% for post in posts %}
+        <div id=postdesc>{{ post.owner.user.first_name }} is in {{ post.location }}:</div>
+        <div><img src="{{ post.image.url }}" alt="image"></div>
+        <div>{{ post.text }}</div>
+        <div>Liked by:
+        <ul>
+            {% for like in likes %}
+            {{ like.user.username }}
+            {% endfor %}
+        </ul>
+        </div>
+        {% endfor %}
+{% endblock %}

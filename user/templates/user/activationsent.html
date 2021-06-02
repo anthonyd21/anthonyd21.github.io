@@ -1,0 +1,13 @@
+{% extends 'user/layout.html' %}
+
+{% block head %}
+<title>Activaton Sent</title>
+{% endblock %}
+
+{% block body %}
+<div>
+    Please confirm your email address to complete the registration.
+</div>
+<a href="{% url 'user:index' %}">Go back</a>
+
+{% endblock %}

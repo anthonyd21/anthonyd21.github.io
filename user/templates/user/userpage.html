@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Homepage</title>
+        <link rel="stylesheet" href="{% static 'user/styles.css' %}">
+    </head>
+    <body>
+        <h1>Hello, {{ name }}!</h1>
+        <h2>Tasks:</h2>
+        <ul>
+            {% for task in tasks %}
+                <li>{{ task }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Add Task:</h2>
+        <form action="{% url 'user:userpage' name %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit">
+        </form>
+    </body>
+</html>
